@@ -6,8 +6,11 @@ import requests
 import pprint
 import json
 
+# Key File URL
+file_url = "/Users/user/PycharmProjects/repeat_drunk_driving/serviceKey.txt"
+
 # decoding Key
-service_key = open("/Users/user/PycharmProjects/repeat_drunk_driving/serviceKey.txt", 'r').readline()
+service_key = open(file_url, 'r').readline()
 
 headers = {
     'accept': 'application/json',
