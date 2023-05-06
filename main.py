@@ -20,7 +20,7 @@ service_key = open(file_url, 'r').readline()
 
 # Swagger URL
 swagger_url = "https://infuser.odcloud.kr/oas/docs?namespace=15099959/v1"
-uddi_data_list = requests.get(swagger_url).json()
+raw_data = requests.get(swagger_url).json()
 
 
 headers = {
@@ -40,7 +40,7 @@ response = requests.get(
     headers=headers,
 )
 
-def parser_uddi(data: any) -> list:
+def uddi_parser(data: any) -> list:
     operations = []
     temp = []
 
@@ -59,11 +59,7 @@ def parser_uddi(data: any) -> list:
 
 
 if __name__ == "__main__":
-    #pprint.pprint(response.json())
-    # pprint.pprint(requests.get("https://api.odcloud.kr/api/15099959/v1/uddi:4fd5b14c-8468-4cb0-93b8-9b182b1553b9?page=1&perPage=20&serviceKey=RgUQcuLZUXq5vPZffYY5065M6ioM4%2FbLIJ%2FchDQJspKPMr9Ys4FBVIVnjXd3%2BhOF6mgmQFboWsio4OZeZkXHJQ%3D%3D").json())
-    #pprint.pprint(requests.get(swagger_url).json())
-
-    uddi_list = parser_uddi(uddi_data_list)
+    uddi_list = uddi_parser(raw_data)
     big_data = []
 
     for uddi in uddi_list:
