@@ -38,15 +38,30 @@ response = requests.get(
     headers=headers,
 )
 
+def parser_uddi(url: str) -> list:
+    test_res = requests.get(url)
+    data = test_res.json()
+    operations = []
+
+    for path in data["paths"]:
+        for method in data["paths"][path]:
+            if "operationId" in data["paths"][path][method]:
+                if data["paths"][path][method]["operationId"].startswith("getuddi:"):
+                    operations.append(data["paths"][path][method]["operationId"])
+    return operations
+
 if __name__ == "__main__":
     #pprint.pprint(response.json())
     # pprint.pprint(requests.get("https://api.odcloud.kr/api/15099959/v1/uddi:4fd5b14c-8468-4cb0-93b8-9b182b1553b9?page=1&perPage=20&serviceKey=RgUQcuLZUXq5vPZffYY5065M6ioM4%2FbLIJ%2FchDQJspKPMr9Ys4FBVIVnjXd3%2BhOF6mgmQFboWsio4OZeZkXHJQ%3D%3D").json())
     #pprint.pprint(requests.get(swagger_url).json())
 
-    test_data = requests.get(swagger_url).json()
-    url = "https://api.example.com/uddi:4fd5b14c-8468-4cb0-93b8-9b182b1553b9/data"
-    match = re.search(r'uddi:(\w+)', url)
+    # test_url = "https://infuser.odcloud.kr/oas/docs?namespace=15099959/v1"
+    # test_res = requests.get(test_url)
+    # data = test_res.json()
 
-    
+    operations = parser_uddi(swagger_url)
+    print(operations)
 
-    
+
+
+
